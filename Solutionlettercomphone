@@ -1,0 +1,30 @@
+import java.util.*; 
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.length() == 0) {
+            return new ArrayList<>(); 
+        }
+        String[] mapping = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        int count = 1;
+        for (int i = 0; i < digits.length(); i++) {
+            count *= mapping[digits.charAt(i) - '0'].length();
+        }    
+        String[] result = new String[count];
+        result[0] = ""; 
+        int currentSize = 1;
+        for (int i = 0; i < digits.length(); i++) {
+            String letters = mapping[digits.charAt(i) - '0'];
+            String[] temp = new String[count];
+            int index = 0;
+            for (int j = 0; j < currentSize; j++) {
+                for (char c : letters.toCharArray()) {
+                    temp[index++] = result[j] + c;
+                }
+            }
+            result = temp;
+            currentSize = index;
+        }
+        return Arrays.asList(result); 
+    }
+}
